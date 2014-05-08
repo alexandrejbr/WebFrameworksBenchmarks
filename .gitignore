@@ -85,3 +85,15 @@ project/plugins/project/
 
 # Scala-IDE specific
 .scala_dependencies
+
+
+############
+## Maven
+############
+
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
