@@ -1,6 +1,8 @@
 ## What was used
 
 * [Leiningen][l]
+* [http-kit] [h]
+* [data.json][j]
 
 ## how to run it
 
@@ -16,3 +18,5 @@ Follow these steps:
 
 
 [l]: http://leiningen.org/
+[h]: http://http-kit.org/
+[j]: https://github.com/clojure/data.json
