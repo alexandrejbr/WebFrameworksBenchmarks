@@ -8,8 +8,6 @@ version       := "0.3"
 
 scalaVersion  := "2.10.4"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-optimise","-target:jvm-1.7")
-
 resolvers ++= Seq(
   "spray repo" at "http://repo.spray.io/"
 )
