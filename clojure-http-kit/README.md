@@ -1,8 +1,9 @@
 ## What was used
 
 * [Leiningen][l]
-* [http-kit] [h]
-* [data.json][j]
+* [http-kit] [h] (http server)
+* [data.json][j] (for JSON serialization)
+* [cheshire] [c] (for JSON serialization)
 
 ## how to run it
 
@@ -20,3 +21,4 @@ Follow these steps:
 [l]: http://leiningen.org/
 [h]: http://http-kit.org/
 [j]: https://github.com/clojure/data.json
+[c]: https://github.com/dakrone/cheshire
