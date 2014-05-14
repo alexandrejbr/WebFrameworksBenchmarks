@@ -3,4 +3,5 @@
   :main http-kit-example.core            
   :dependencies [[org.clojure/clojure "1.6.0"] 
   				 [http-kit "2.1.16"]
-  				 [org.clojure/data.json "0.2.4"]])
+  				 [org.clojure/data.json "0.2.4"]
+  				 [cheshire "5.3.1"]])

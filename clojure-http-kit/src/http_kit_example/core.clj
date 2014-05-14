@@ -1,5 +1,6 @@
 (ns http-kit-example.core
-	(:use org.httpkit.server))
+	(:use org.httpkit.server)
+	(:require [cheshire.core :refer :all]))
 
 (require '[clojure.data.json :as json])
 
@@ -19,25 +20,32 @@
 	 :publisher "Vintage"
 	 :isbn13 9780099284864
 	 :publishedDate "April 27, 2014"}))
-
+	 
 (def msg_text (json/write-str msg))
 
-(defn json [] 
- 	{:status 200
+(defn json_response [json_body] 
+	{:status 200
  	 :headers {"Content-Type" "application/json"}
- 	 :body (json/write-str msg)
-	})
+ 	 :body json_body})
 
-(defn text [] 
-	{:status  200
+(defn clj-json [] (json_response (json/write-str msg)))
+
+(defn cheshire-json [] (json_response (generate-string msg)))
+
+(defn text []
+	{:status 200
 	 :headers {"Content-Type" "text/plain"}
 	 :body msg_text})
 
-(defn app [req] 
-	"Http request handler"
-	(if (= (get req :uri) "/json") (json) (text)))
+(defn not-found []
+	{:status 404
+	 :headers {"Content-Type" "text/plain"}
+	 :body "Not found!"})
 
-(defn -main
-	"Application entry point"
-	[]
-	(run-server app {:port 8080}))
+(def routing-map
+	{"/json" cheshire-json
+	 "/text" text})
+
+(defn app [req] ((get routing-map (get req :uri) not-found)))
+
+(defn -main [] (run-server app {:port 8080}))
