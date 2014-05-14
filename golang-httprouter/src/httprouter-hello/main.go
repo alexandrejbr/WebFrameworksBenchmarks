@@ -1,12 +1,10 @@
 package main
 
 import (
+	"fmt"
+    "github.com/julienschmidt/httprouter"
     "net/http"
     "encoding/json"
-    "fmt"
-
-    "github.com/zenazn/goji"
-    "github.com/zenazn/goji/web"
 )
 
 // model
@@ -45,24 +43,23 @@ var msg = []Entity {
 
 var text, _ = json.Marshal(msg) 
 
-func get(c web.C, w http.ResponseWriter, r *http.Request) {
+func get(w http.ResponseWriter, r *http.Request, _ map[string]string) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(&msg)
 }
 
-func plain(c web.C, w http.ResponseWriter, r *http.Request) {
+func plain(w http.ResponseWriter, r *http.Request, _ map[string]string) {
 	w.Header().Set("Content-Type", "text/plain")
 	fmt.Fprintf(w, "%s", text)
 }
 
-// routes
-func routes() {
-	goji.Get("/", plain)
-	goji.Get("/text/", plain)
-	goji.Get("/json/", get)
-}
-
 func main() {
-	routes()
-    goji.Serve()
+    router := httprouter.New()
+
+    // routes
+    router.GET("/", plain)
+    router.GET("/text/", plain)
+    router.GET("/json/", get)
+
+    http.ListenAndServe(":8000", router)
 }
