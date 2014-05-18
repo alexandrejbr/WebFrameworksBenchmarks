@@ -3,44 +3,39 @@ package org.restexpress.scaffold.minimal.controller;
 import java.util.Collections;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.*;
 import org.restexpress.Request;
 import org.restexpress.Response;
 import org.restexpress.scaffold.minimal.Book;
 
 public class SampleController
 {
+    private static final String text = objectAsString();
 	public SampleController()
 	{
 		super();
 	}
 
-	public Object create(Request request, Response response)
+	public Book[] json(Request request, Response response)
 	{
-		//TODO: Your 'POST' logic here...
-		return null;
-	}
-
-	public Object read(Request request, Response response)
-	{
-		//TODO: Your 'GET' logic here...
-		return null;
-	}
-
-	public Book[] readAll(Request request, Response response)
-	{
-		//TODO: Your 'GET collection' logic here...
 		return Book.all;
 	}
 
-	public void update(Request request, Response response)
-	{
-		//TODO: Your 'PUT' logic here...
-		response.setResponseNoContent();
-	}
+    public String text(Request request, Response response){
+        response.setContentType("text/plain");
+        return text;
+    }
 
-	public void delete(Request request, Response response)
-	{
-		//TODO: Your 'DELETE' logic here...
-		response.setResponseNoContent();
-	}
+    private static String objectAsString(){
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        try {
+            return mapper.writeValueAsString(Book.all);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -51,7 +51,7 @@ public class SampleControllerTest {
 
     @Test
     public void postDirectiveReplayRequest() throws IOException {
-        HttpGet getRequest = new HttpGet(BASE_URL + "/your/route/here/123.json");
+        HttpGet getRequest = new HttpGet(BASE_URL + "/json");
         final HttpResponse response = httpClient.execute(getRequest);
         assertEquals(200, response.getStatusLine().getStatusCode());
     }

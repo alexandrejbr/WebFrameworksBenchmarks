@@ -12,11 +12,11 @@ public class Book
                 new Book("Animal Farm", new String[]{"George Orwell"}, "Penguin", 9780141036137L, "April 27, 2014"),
             };
 
-    private String title;
-    private String[] authors;
-    private String publisher;
-    private long isbn13;
-    private String publishedDate;
+    public String title;
+    public String[] authors;
+    public String publisher;
+    public long isbn13;
+    public String publishedDate;
 
     public Book(String title, String[] authors, String publisher, long isbn13, String publishedDate) {
         this.title = title;

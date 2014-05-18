@@ -9,14 +9,17 @@ public abstract class Routes
 	public static void define(Configuration config, RestExpress server)
     {
 		//TODO: Your routes here...
-		server.uri("/your/route/here/{sampleId}.{format}", config.getSampleController())
-			.method(HttpMethod.GET, HttpMethod.PUT, HttpMethod.DELETE)
-			.name(Constants.Routes.SINGLE_SAMPLE);
+		server.uri("/json", config.getSampleController())
+            .action("json", HttpMethod.GET)
+			.method(HttpMethod.GET)
+			.name("sample.json.route")
+            .defaultFormat("application/json");
 
-		server.uri("/your/route/here.{format}", config.getSampleController())
-			.action("readAll", HttpMethod.GET)
-			.method(HttpMethod.POST)
-			.name(Constants.Routes.SAMPLE_COLLECTION);
+		server.uri("/text", config.getSampleController())
+			.action("text", HttpMethod.GET)
+			.method(HttpMethod.GET)
+			.name("sample.text.route")
+            .noSerialization();
 // or...
 //		server.regex("/some.regex", config.getRouteController());
     }
