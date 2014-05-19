@@ -20,11 +20,12 @@ Follow these steps:
 		Threads to compute response from request = { Runtime.getRuntime().availableProcessors() }
 		Ready to receive requests!
 
-4. Ready to take request @ http://127.0.0.1:8080/
-	4.1 /text 
-	4.2 /json_stock [data.json][j]
-	4.2 /json_chesire [cheshire][c]
-	4.3 /json_clj-json [clj-json][f]
+4. Ready to take request:
+
+	* http://127.0.0.1:8080/text 
+	* http://127.0.0.1:8080/json_stock  
+	* http://127.0.0.1:8080/json_chesire 
+	* http://127.0.0.1:8080/json_clj-json
 
 
 [l]: http://leiningen.org/
