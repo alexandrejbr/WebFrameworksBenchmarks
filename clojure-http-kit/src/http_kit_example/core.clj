@@ -1,51 +1,54 @@
 (ns http-kit-example.core
 	(:use org.httpkit.server)
-	(:require [cheshire.core :refer :all]))
+	(:require [cheshire.core :refer :all]
+			  [http-kit-example.books :as books]
+			  [clojure.data.json :as json]
+			  [clj-json.core :as clj-json]))
 
-(require '[clojure.data.json :as json])
+;cpu count:
 
-(def msg (list 
-	{:title "Animal Farm"
-	 :authors (list "George Orwell")
-	 :publisher "Penguin"
-	 :isbn13 9780141036137
-	 :publishedDate "April 27, 2014"}
-	{:title "1984"
-	 :authors (list "George Orwell")
-	 :publisher "Penguin"
-	 :isbn13 9780141036144
-	 :publishedDate "April 27, 2014"}
-	{:title "The Razor's Edge"
-	 :authors (list "William Sommerset Maugham")
-	 :publisher "Vintage"
-	 :isbn13 9780099284864
-	 :publishedDate "April 27, 2014"}))
-	 
-(def msg_text (json/write-str msg))
+(def n-cpu (.availableProcessors (Runtime/getRuntime)))
+
+(def list-of-books-txt (json/write-str books/list-of-books))
 
 (defn json_response [json_body] 
 	{:status 200
  	 :headers {"Content-Type" "application/json"}
  	 :body json_body})
 
-(defn clj-json [] (json_response (json/write-str msg)))
+;http request handlers:
 
-(defn cheshire-json [] (json_response (generate-string msg)))
+(defn stock-json [] (json_response (json/write-str books/list-of-books)))
+
+(defn cheshire-json [] (json_response (generate-string books/list-of-books)))
+
+(defn clj-json [] (json_response (clj-json/generate-string books/list-of-books)))
 
 (defn text []
 	{:status 200
 	 :headers {"Content-Type" "text/plain"}
-	 :body msg_text})
+	 :body list-of-books-txt})
 
 (defn not-found []
 	{:status 404
 	 :headers {"Content-Type" "text/plain"}
 	 :body "Not found!"})
 
+;http request routing:
+
 (def routing-map
-	{"/json" cheshire-json
+	{"/json_stock" stock-json
+	 "/json_chesire" cheshire-json
+	 "/json_clj-json" clj-json
 	 "/text" text})
+
+;main http handler:
 
 (defn app [req] ((get routing-map (get req :uri) not-found)))
 
-(defn -main [] (run-server app {:port 8080}))
+;entry point:
+
+(defn -main [] (run-server app {:port 8080 :thread n-cpu}) 
+	(print "Threads to compute response from request = ")
+	(println n-cpu)
+	(print "Ready to receive requests!"))
