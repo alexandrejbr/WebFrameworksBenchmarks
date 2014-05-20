@@ -46,6 +46,8 @@ wrk -t 4 -c 100 --latency -d 60s <URL>
 ## JSON Scores:
 ```
 ---------------------------------  --------
+Spray-can-only-fp: ..............  111777.46 (*)
+Spray-can-only: .................  106569.73
 Spray: ..........................  97620.83
 Play Framework (spray): .........  72072.42
 Clojure http-kit ................  64607.17 (!!!)
@@ -58,6 +60,8 @@ Node.js: ........................  42727.68
 ## Plain Text Scores:
 ```
 ---------------------------------  --------
+Spray-can-only-fp: ..............  144685.13 (*)
+Spray-can-only: .................  137590.83
 Spray: ..........................  131394.28
 Clojure http-kit ................  100372.60 (!!!)
 Play Framework: .................  91196.91
@@ -65,3 +69,6 @@ RestExpress: ....................  70793.38 (!!!)
 Node.js: ........................  47306.06
 
 ```
+(!!!) test not using all CPU power
+
+(*) this test run using fastpath, which uses directly conection handler avoiding message passing to the handler actor. [See more][https://groups.google.com/forum/#!searchin/spray-user/fastpath/spray-user/ovWhZy8vxtU/7o-HLl1j_9oJ]
