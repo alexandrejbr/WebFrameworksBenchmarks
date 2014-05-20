@@ -5,6 +5,7 @@ import (
     "github.com/julienschmidt/httprouter"
     "net/http"
     "encoding/json"
+    "runtime"
 )
 
 // model
@@ -54,6 +55,7 @@ func plain(w http.ResponseWriter, r *http.Request, _ map[string]string) {
 }
 
 func main() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
     router := httprouter.New()
 
     // routes
