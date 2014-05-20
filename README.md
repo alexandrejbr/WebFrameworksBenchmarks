@@ -71,4 +71,4 @@ Node.js: ........................  47306.06
 ```
 (!!!) test not using all CPU power
 
-(*) this test run using fastpath, which uses directly conection handler avoiding message passing to the handler actor. [See more][https://groups.google.com/forum/#!searchin/spray-user/fastpath/spray-user/ovWhZy8vxtU/7o-HLl1j_9oJ]
+(*) this test run using fastpath, which uses directly conection handler avoiding message passing to the handler actor. [See more](https://groups.google.com/forum/#!searchin/spray-user/fastpath/spray-user/ovWhZy8vxtU/7o-HLl1j_9oJ)
