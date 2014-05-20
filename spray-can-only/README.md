@@ -1,8 +1,6 @@
 ## What was used
 
 * [spray 1.3.1 (_spray-can_)][s] 
-* [twirl][t]
-* [nscala-time][j]
 
 ## how to run it
 
@@ -28,5 +26,3 @@ Follow these steps:
 		$ java -jar sample-spray-twirl-assembly-0.1.jar
 
 [s]: http://spray.io/
-[t]: https://github.com/spray/twirl
-[j]: https://github.com/nscala-time/nscala-time
