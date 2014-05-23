@@ -2,24 +2,29 @@ package com.twitter.finatra_example
 
 import com.twitter.finatra._
 import com.twitter.finatra.ContentType._
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
 object App extends FinatraServer {
 
-  class CustomerView(val customers: IndexedSeq[Customer]) extends View {
-    val template = "customer.mustache"
+  val txt = asString(Book.all)
+  
+  def asString(obj: Any) = {
+    val m = new ObjectMapper()
+    m.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+    m.registerModule(DefaultScalaModule)
+    m.writeValueAsString(obj)
   }
 
   class ExampleApp extends Controller {
-    private val maxCount = 200
-    private val minCount = 20
-    get("/") { req =>
-      val count = req.params.getInt("count")
-      val customers = count match {
-        case Some(c) => Customer.values(if (c <= maxCount) c else maxCount)
-        case None => Customer.values(minCount)
-      }
-      //render.view(new CustomerView(customers)).toFuture
-      render.json(customers).toFuture
+
+    get("/json") { req =>
+      render.json(Book.all).toFuture
+    }
+
+    get("/text") { req =>
+      render.plain(txt).toFuture
     }
   }
 
