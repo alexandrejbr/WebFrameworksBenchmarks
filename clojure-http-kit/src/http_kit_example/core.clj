@@ -1,4 +1,5 @@
 (ns http-kit-example.core
+	(:gen-class)
 	(:use org.httpkit.server)
 	(:require [cheshire.core :refer :all]
 			  [http-kit-example.books :as books]
