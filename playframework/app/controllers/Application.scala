@@ -1,14 +1,14 @@
 package controllers
 
-import play.api._
 import play.api.mvc._
 import models.Customer
-import play.api.cache.Cached
-import play.api.Play.current
 import models.Book
 import play.api.libs.json._
 
-object Application extends Controller {
+import javax.inject._
+
+@Singleton
+class Application extends Controller {
   private val maxCount = 200
   private val minCount = 20
   def index(count: Option[Int]) = //Cached(req => req.uri) {
