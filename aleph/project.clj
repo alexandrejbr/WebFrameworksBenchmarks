@@ -3,8 +3,9 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-tuple "0.2.2"]
                  [org.clojure/tools.cli "0.3.3"]
-                 [aleph "0.4.1-beta2"]
+                 [aleph "0.4.2-alpha6"]
                  [cheshire "5.6.3"]
-                 [clj-json "0.5.3"]]
+                 [clj-json "0.5.3"]
+                 [clj-time "0.12.0"]]
   :main hello.handler
     :aot :all)

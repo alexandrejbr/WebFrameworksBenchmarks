@@ -44,4 +44,5 @@
       (System/exit 0))
 
     (aleph.netty/leak-detector-level! :disabled)
-        (http/start-server handler {:port port, :executor :none})))
+    (http/start-server handler {:port port, :executor :none}))
+  (read-line))
