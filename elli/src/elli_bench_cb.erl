@@ -56,4 +56,4 @@ books() ->
     ].
 
 books_string() ->
-    <<"[{\"authors\": [\"George Orwell\"],\"isbn13\": 9780141036137,\"publishedDate\": \"April 27, 2014\",\"publisher\": \"Penguin\",\"title\": \"Animal Farm\"},{\"authors\": [\"George Orwell\"],\"isbn13\": 9780141036144,\"publishedDate\": \"April 27, 2014\",\"publisher\": \"Penguin\",\"title\": \"1984\"},{\"authors\": [\"William Sommerset Maugham\"],\"isbn13\": 9780099284864,\"publishedDate\": \"April 27, 2014\",\"publisher\": \"Vintage\",\"title\": \"The Razor\'s Edge\"}]">>.
+    <<"[{\"authors\":[\"George Orwell\"],\"isbn13\":9780141036137,\"publishedDate\":\"April 27, 2014\",\"publisher\":\"Penguin\",\"title\":\"Animal Farm\"},{\"authors\":[\"George Orwell\"],\"isbn13\":9780141036144,\"publishedDate\":\"April 27, 2014\",\"publisher\":\"Penguin\",\"title\":\"1984\"},{\"authors\":[\"William Sommerset Maugham\"],\"isbn13\":9780099284864,\"publishedDate\":\"April 27, 2014\",\"publisher\":\"Vintage\",\"title\":\"The Razor\'s Edge\"}]">>.
