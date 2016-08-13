@@ -1,6 +1,6 @@
 package hello;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -32,8 +32,8 @@ public class HelloServerHandler extends SimpleChannelInboundHandler<Object> {
         }
     };
 
-    private static final ByteBuf CONTENT_BUFFER = Unpooled.unreleasableBuffer(Unpooled.directBuffer().writeBytes("Hello, World!".getBytes(CharsetUtil.UTF_8)));
-    private static final CharSequence contentLength = HttpHeaders.newEntity(String.valueOf(CONTENT_BUFFER.readableBytes()));
+    private static final ByteBuf CONTENT_BUFFER;
+    private static final CharSequence CONTENT_LENGTH;
 
     private static final CharSequence TYPE_PLAIN = HttpHeaders.newEntity("text/plain; charset=UTF-8");
     private static final CharSequence TYPE_JSON = HttpHeaders.newEntity("application/json; charset=UTF-8");
@@ -42,11 +42,27 @@ public class HelloServerHandler extends SimpleChannelInboundHandler<Object> {
     private static final CharSequence DATE_ENTITY = HttpHeaders.newEntity(HttpHeaders.Names.DATE);
     private static final CharSequence CONTENT_LENGTH_ENTITY = HttpHeaders.newEntity(HttpHeaders.Names.CONTENT_LENGTH);
     private static final CharSequence SERVER_ENTITY = HttpHeaders.newEntity(HttpHeaders.Names.SERVER);
+    private static final Book[] DATA;
     private static final ObjectMapper MAPPER;
 
     static {
         MAPPER = new ObjectMapper();
         MAPPER.registerModule(new AfterburnerModule());
+        DATA = new Book[]{
+                new Book("Animal Farm", new String[]{"George Orwell"}, "Penguin", 9780141036137L, "April 27, 2014"),
+                new Book("1984", new String[]{"George Orwell"}, "Penguin", 9780141036144L, "April 27, 2014"),
+                new Book("The Razor's Edge", new String[]{"William Sommerset Maugham"}, "Vintage", 9780099284864L, "April 27, 2014")
+        };
+        byte[] plaintext = new byte[0];
+        try {
+            plaintext = MAPPER.writeValueAsBytes(DATA);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        CONTENT_BUFFER =
+                Unpooled.unreleasableBuffer(Unpooled.directBuffer().writeBytes(plaintext));
+        CONTENT_LENGTH =
+                HttpHeaders.newEntity(String.valueOf(CONTENT_BUFFER.readableBytes()));
         //MAPPER.configure(SerializationFeature.INDENT_OUTPUT, false);
     }
 
@@ -64,12 +80,6 @@ public class HelloServerHandler extends SimpleChannelInboundHandler<Object> {
 
     }
 
-    private static final Book[] data = new Book[]{
-            new Book("Animal Farm", new String[]{"George Orwell"}, "Penguin", 9780141036137L, "April 27, 2014"),
-            new Book("1984", new String[]{"George Orwell"}, "Penguin", 9780141036144L, "April 27, 2014"),
-            new Book("The Razor's Edge", new String[]{"William Sommerset Maugham"}, "Vintage", 9780099284864L, "April 27, 2014")
-    };
-
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof HttpRequest) {
@@ -77,10 +87,10 @@ public class HelloServerHandler extends SimpleChannelInboundHandler<Object> {
             String uri = request.getUri();
             switch (uri) {
                 case "/plaintext":
-                    writeResponse(ctx, request, CONTENT_BUFFER.duplicate(), TYPE_PLAIN, contentLength);
+                    writeResponse(ctx, request, CONTENT_BUFFER.duplicate(), TYPE_PLAIN, CONTENT_LENGTH);
                     return;
                 case "/json":
-                    byte[] json = MAPPER.writeValueAsBytes(data);
+                    byte[] json = MAPPER.writeValueAsBytes(DATA);
                     writeResponse(ctx, request, Unpooled.wrappedBuffer(json), TYPE_JSON, String.valueOf(json.length));
                     return;
             }
