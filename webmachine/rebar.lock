@@ -1,0 +1,10 @@
+{"1.1.0",
+[{<<"mochiweb">>,{pkg,<<"mochiweb">>,<<"2.12.2">>},1},
+ {<<"webmachine">>,
+  {git,"git://github.com/webmachine/webmachine",
+       {ref,"30f2386b008b41c07fd4a0274a9846a4020a074d"}},
+  0}]}.
+[
+{pkg_hash,[
+ {<<"mochiweb">>, <<"80804AD342AFA3D7F3524040D4EED66CE74B17A555DE454AC85B07C479928E46">>}]}
+].
