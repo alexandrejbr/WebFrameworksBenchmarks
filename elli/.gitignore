@@ -3,3 +3,7 @@ deps
 ebin
 .rebar
 *~
+_build
+priv
+rebar.lock
+compile_commands.json
