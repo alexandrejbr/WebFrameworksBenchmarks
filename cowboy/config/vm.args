@@ -1,0 +1,6 @@
+-sname cowboy_bench
+
+-setcookie cowboy_bench_cookie
+
++K true
++A30
