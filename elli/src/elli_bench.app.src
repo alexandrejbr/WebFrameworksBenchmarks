@@ -1,12 +1,13 @@
 {application, elli_bench,
  [
-  {description, ""},
-  {vsn, "1"},
+  {description, "Elli Benchmark"},
+  {vsn, "0.1.0"},
   {registered, []},
-  {applications, [
-                  kernel,
-                  stdlib
-                 ]},
   {mod, { elli_bench_app, []}},
+  {applications, [ kernel
+                 , stdlib
+                 , elli
+                 , jiffy
+                 ]},
   {env, []}
  ]}.

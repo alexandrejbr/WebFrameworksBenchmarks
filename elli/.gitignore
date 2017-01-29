@@ -7,3 +7,4 @@ _build
 priv
 rebar.lock
 compile_commands.json
+*.beam

@@ -1,4 +1,9 @@
-rebar get-deps
-rebar compile
+Release
+--------
 
-erl -pa ebin deps/*/ebin +sbwt very_long +swt very_low -s elli_bench -noshell -detached
+Or build and run as a release, you can modify `config/sys.config` and `config/vm.args` to update application and VM settings.
+
+```
+$ rebar3 release
+$ _build/default/rel/elli_bench/bin/elli_bench console
+```

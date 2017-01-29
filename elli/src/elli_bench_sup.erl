@@ -8,15 +8,12 @@
 %% Supervisor callbacks
 -export([init/1]).
 
-%% Helper macro for declaring children of supervisor
--define(CHILD(I, Type), {I, {I, start_link, []}, permanent, 5000, Type, [I]}).
-
 %% ===================================================================
 %% API functions
 %% ===================================================================
 
 start_link() ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+  supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ===================================================================
 %% Supervisor callbacks
@@ -24,18 +21,17 @@ start_link() ->
 
 %% CAUTION : Assign big number to db pool will fail travis ci.
 %%           Original value was 5000, too big! Even 512 crashes! keep 256
-%%           till travis-ci environment accepts bigger size of db pool. 
+%%           till travis-ci environment accepts bigger size of db pool.
 
 init([]) ->
-    crypto:start(),
-    ElliOpts = [{callback, elli_bench_cb}, {port, 8080}],
-    ElliSpec = {
-        fancy_http,
-        {elli, start_link, [ElliOpts]},
-        permanent,
-        256,
-        worker,
-        [elli]},
+  Port = application:get_env(elli_bench, port, 8081),
+  ElliOpts = [{callback, elli_bench_cb}, {port, Port}],
+  ElliSpec = {
+      fancy_http,
+      {elli, start_link, [ElliOpts]},
+      permanent,
+      5000,
+      worker,
+      [elli]},
 
-    {ok, { {one_for_one, 5, 10}, [ElliSpec]} }.
-
+  {ok, { {one_for_one, 5, 10}, [ElliSpec]} }.
