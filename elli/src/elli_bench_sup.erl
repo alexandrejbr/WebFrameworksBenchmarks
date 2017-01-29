@@ -25,13 +25,22 @@ start_link() ->
 
 init([]) ->
   Port = application:get_env(elli_bench, port, 8081),
-  ElliOpts = [{callback, elli_bench_cb}, {port, Port}],
+  Config = [
+            {mods, [ {elli_date, []}
+                   , {elli_bench_cb, []}
+                   ]
+            }
+           ],
+  ElliOpts = [ {callback, elli_middleware}
+             , {callback_args, Config}
+             , {port, Port}
+             ],
   ElliSpec = {
-      fancy_http,
-      {elli, start_link, [ElliOpts]},
-      permanent,
-      5000,
-      worker,
-      [elli]},
+    elli_bench,
+    {elli, start_link, [ElliOpts]},
+    permanent,
+    5000,
+    worker,
+    [elli]},
 
   {ok, { {one_for_one, 5, 10}, [ElliSpec]} }.
