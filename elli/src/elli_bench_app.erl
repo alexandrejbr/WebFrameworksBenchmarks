@@ -10,7 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
-    elli_bench_sup:start_link().
+  elli_bench_sup:start_link().
 
 stop(_State) ->
-    ok.
+  ok.
