@@ -25,11 +25,10 @@ start(_StartType, _StartArgs) ->
          ]
         }
       ]),
-  {ok, _} = cowboy:start_http( http_listener
-                             , 100
-                             , [{port, 8082}]
-                             , [{env, [{dispatch, Dispatch}]}]
-                             ),
+  {ok, _} = cowboy:start_clear( http
+                              , [{port, 8083}]
+                              , #{ env => #{dispatch => Dispatch}}
+                              ),
   cowboy_bench_sup:start_link().
 
 %%--------------------------------------------------------------------
