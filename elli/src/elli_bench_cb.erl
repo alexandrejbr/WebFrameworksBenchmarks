@@ -8,7 +8,7 @@ handle(Req, _Args) ->
   %% Delegate to our handler function
   handle(Req#req.method, elli_request:path(Req), Req).
 
-%% Plaintext test route 
+%% Plaintext test route
 handle('GET', [<<"plaintext">>], _Req) ->
   %% Reply with a normal response. 'ok' can be used instead of '200'
   %% to signal success.
@@ -43,6 +43,14 @@ handle('GET',[<<"json_jsone">>], _Req) ->
   , [{<<"Content-Type">>, <<"application/json">>}]
   , jsone:encode(books_maps())
   };
+handle('GET',[<<"json_lejson">>], _Req) ->
+  %% Reply with a normal response. 'ok' can be used instead of '200'
+  %% to signal success.
+  { ok
+  , [{<<"Content-Type">>, <<"application/json">>}]
+  , lejson:encode(books_maps())
+  };
+
 handle(_, _, _Req) ->
   {404, [], <<"Not Found">>}.
 
